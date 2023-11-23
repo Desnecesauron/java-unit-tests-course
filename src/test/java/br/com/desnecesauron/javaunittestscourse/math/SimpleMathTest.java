@@ -12,12 +12,16 @@ public class SimpleMathTest {
     @Test
     @DisplayName("Test 5+10 = 15")
     public void testSum_WhenFiveIsAddedByTen_ShouldReturnFifteen() {
+        // Given/Arrange, When/Act and Then/Assert -> GWT/AAA[triple A structure]
+        // Given / Arrange
         System.out.println("sum");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
         SimpleMath instance = new SimpleMath();
         Double expResult = 15.0;
+        // When / Act
         Double result = instance.sum(firstNumber, secondNumber);
+        // Then / Assert
         assertEquals(expResult, result, () -> firstNumber + "+" + secondNumber + " didn't produce " + expResult + "!");
         assertNotEquals(14.999996D, result);
         assertNotNull(result, "The sum is null!");
