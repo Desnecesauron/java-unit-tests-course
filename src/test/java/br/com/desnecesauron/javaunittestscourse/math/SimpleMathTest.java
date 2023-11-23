@@ -1,7 +1,8 @@
 package br.com.desnecesauron.javaunittestscourse.math;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleMathTest {
 
@@ -14,6 +15,8 @@ public class SimpleMathTest {
         Double expResult = 15.0;
         Double result = instance.sum(firstNumber, secondNumber);
         assertEquals(expResult, result, "The sum is wrong!");
+        assertNotEquals(14.999996D, result);
+        assertNotNull(result, "The sum is null!");
     }
 
     @Test
