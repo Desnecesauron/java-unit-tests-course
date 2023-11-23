@@ -14,7 +14,7 @@ public class SimpleMathTest {
         SimpleMath instance = new SimpleMath();
         Double expResult = 15.0;
         Double result = instance.sum(firstNumber, secondNumber);
-        assertEquals(expResult, result, "The sum is wrong!");
+        assertEquals(expResult, result, () -> firstNumber + "+" + secondNumber + " didn't produce " + expResult + "!");
         assertNotEquals(14.999996D, result);
         assertNotNull(result, "The sum is null!");
     }
