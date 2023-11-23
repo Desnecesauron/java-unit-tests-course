@@ -15,6 +15,7 @@ public class SimpleMath {
     }
 
     public Double division(Double firstNumber, Double secondNumber) {
+        if(secondNumber == 0D) return null;
         return firstNumber / secondNumber;
     }
 

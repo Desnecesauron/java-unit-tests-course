@@ -1,13 +1,17 @@
 package br.com.desnecesauron.javaunittestscourse.math;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleMathTest {
 
+    // nomenclatura
+    // test[System Under Test]_[Condition or State Change]_[Expected Result]
     @Test
-    public void sum() {
+    @DisplayName("Test 5+10 = 15")
+    public void testSum_WhenFiveIsAddedByTen_ShouldReturnFifteen() {
         System.out.println("sum");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
@@ -20,7 +24,8 @@ public class SimpleMathTest {
     }
 
     @Test
-    public void subtraction() {
+    @DisplayName("Test 5-10 = -5")
+    public void testSubtraction() {
         System.out.println("subtraction");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
@@ -32,7 +37,8 @@ public class SimpleMathTest {
     }
 
     @Test
-    public void multiplication() {
+    @DisplayName("Test 5*10 = 50")
+    public void testMultiplication() {
         System.out.println("multiplication");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
@@ -44,7 +50,8 @@ public class SimpleMathTest {
     }
 
     @Test
-    public void division() {
+    @DisplayName("Test 5/10 = 0.5")
+    public void testDivision() {
         System.out.println("division");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
@@ -56,7 +63,21 @@ public class SimpleMathTest {
     }
 
     @Test
-    public void average() {
+    @DisplayName("Test 5/0 = null")
+    public void testeDivision_WhenDividingByZero_ShouldReturnNull() {
+        System.out.println("division");
+        Double firstNumber = 5.0;
+        Double secondNumber = 0.0;
+        SimpleMath instance = new SimpleMath();
+        Double expResult = null;
+        Double result = instance.division(firstNumber, secondNumber);
+        assertEquals(expResult, result, () -> firstNumber + "/" + secondNumber + " didn't produce " + expResult + "!");
+        assertNull(result, "The division is not null!");
+    }
+
+    @Test
+    @DisplayName("Test (5+10)/2 = 7.5")
+    public void testAverage() {
         System.out.println("average");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
@@ -68,7 +89,8 @@ public class SimpleMathTest {
     }
 
     @Test
-    public void squareRoot() {
+    @DisplayName("Test sqrt(25) = 5")
+    public void testSquareRoot() {
         System.out.println("squareRoot");
         Double number = 25.0;
         SimpleMath instance = new SimpleMath();
