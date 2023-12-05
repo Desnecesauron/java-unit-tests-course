@@ -1,12 +1,33 @@
 package br.com.desnecesauron.javaunittestscourse.math;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Test Math Operations")
 public class SimpleMathTest {
+
+    SimpleMath mathInstance;
+    @BeforeAll
+    static void setup() {
+        System.out.println("Running @BeforeAll method");
+    }
+
+    @AfterAll
+    static void cleanup() {
+        System.out.println("Running @AfterAll method");
+    }
+
+    @BeforeEach
+    void beforeEachMethod() {
+        mathInstance = new SimpleMath();
+        System.out.println("Running @BeforeEach method");
+    }
+
+    @AfterEach
+    void afterEachMethod() {
+        System.out.println("Running @AfterEach method");
+    }
 
     // nomenclatura
     // test[System Under Test]_[Condition or State Change]_[Expected Result]
@@ -18,10 +39,9 @@ public class SimpleMathTest {
         System.out.println("sum");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = 15.0;
         // When / Act
-        Double result = instance.sum(firstNumber, secondNumber);
+        Double result = mathInstance.sum(firstNumber, secondNumber);
         // Then / Assert
         assertEquals(expResult, result, () -> firstNumber + "+" + secondNumber + " didn't produce " + expResult + "!");
         assertNotEquals(14.999996D, result);
@@ -34,9 +54,8 @@ public class SimpleMathTest {
         System.out.println("subtraction");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = -5.0;
-        Double result = instance.subtraction(firstNumber, secondNumber);
+        Double result = mathInstance.subtraction(firstNumber, secondNumber);
         assertEquals(expResult, result, () -> firstNumber + "-" + secondNumber + " didn't produce " + expResult + "!");
         assertNotNull(result, "The subtraction is null!");
     }
@@ -47,9 +66,8 @@ public class SimpleMathTest {
         System.out.println("multiplication");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = 50.0;
-        Double result = instance.multiplication(firstNumber, secondNumber);
+        Double result = mathInstance.multiplication(firstNumber, secondNumber);
         assertEquals(expResult, result, () -> firstNumber + "*" + secondNumber + " didn't produce " + expResult + "!");
         assertNotNull(result, "The multiplication is null!");
     }
@@ -60,9 +78,8 @@ public class SimpleMathTest {
         System.out.println("division");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = 0.5;
-        Double result = instance.division(firstNumber, secondNumber);
+        Double result = mathInstance.division(firstNumber, secondNumber);
         assertEquals(expResult, result, () -> firstNumber + "/" + secondNumber + " didn't produce " + expResult + "!");
         assertNotNull(result, "The division is null!");
     }
@@ -81,9 +98,8 @@ public class SimpleMathTest {
         System.out.println("division by zero");
         Double firstNumber = 5.0;
         Double secondNumber = 0.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = null;
-        Double result = instance.division(firstNumber, secondNumber);
+        Double result = mathInstance.division(firstNumber, secondNumber);
         assertEquals(expResult, result, () -> firstNumber + "/" + secondNumber + " didn't produce " + expResult + "!");
         assertNull(result, "The division is not null!");
     }
@@ -94,9 +110,8 @@ public class SimpleMathTest {
         System.out.println("average");
         Double firstNumber = 5.0;
         Double secondNumber = 10.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = 7.5;
-        Double result = instance.average(firstNumber, secondNumber);
+        Double result = mathInstance.average(firstNumber, secondNumber);
         assertEquals(expResult, result, () -> "(" + firstNumber + "+" + secondNumber + ")/2 didn't produce " + expResult + "!");
         assertNotNull(result, "The average is null!");
     }
@@ -106,9 +121,8 @@ public class SimpleMathTest {
     public void testSquareRoot() {
         System.out.println("squareRoot");
         Double number = 25.0;
-        SimpleMath instance = new SimpleMath();
         Double expResult = 5.0;
-        Double result = instance.squareRoot(number);
+        Double result = mathInstance.squareRoot(number);
         assertEquals(expResult, result, () -> "sqrt(" + number + ") didn't produce " + expResult + "!");
         assertNotNull(result, "The square root is null!");
     }
