@@ -15,7 +15,9 @@ public class SimpleMath {
     }
 
     public Double division(Double firstNumber, Double secondNumber) {
-        if(secondNumber == 0D) return null;
+        if (secondNumber == 0D) {
+            throw new ArithmeticException("Impossible to divide by zero!");
+        }
         return firstNumber / secondNumber;
     }
 

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SimpleMathTest {
 
     SimpleMath mathInstance;
+
     @BeforeAll
     static void setup() {
         System.out.println("Running @BeforeAll method");
@@ -93,15 +94,16 @@ public class SimpleMathTest {
 
 
     @Test
-    @DisplayName("Test 5/0 = null")
+    @DisplayName("Test 5/0 = impossible to divide by zero!")
     public void testDivision_WhenDividingByZero_ShouldReturnNull() {
         System.out.println("division by zero");
         Double firstNumber = 5.0;
         Double secondNumber = 0.0;
-        Double expResult = null;
-        Double result = mathInstance.division(firstNumber, secondNumber);
-        assertEquals(expResult, result, () -> firstNumber + "/" + secondNumber + " didn't produce " + expResult + "!");
-        assertNull(result, "The division is not null!");
+        String expResult = "Impossible to divide by zero!";
+        ArithmeticException result = assertThrows(ArithmeticException.class, () -> {
+            mathInstance.division(firstNumber, secondNumber);
+        }, firstNumber + "/" + secondNumber + " didn't produce ArithmeticException" + "!");
+        assertEquals(expResult, result.getMessage(), () -> firstNumber + "/" + secondNumber + " didn't produce \"" + expResult + "\"!");
     }
 
     @Test
