@@ -1,5 +1,6 @@
 package br.com.desnecesauron.javaunittestscourse.math;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -67,9 +68,17 @@ public class SimpleMathTest {
     }
 
     @Test
+    @Disabled("TODO: make this test work")
+    @DisplayName("Test ignored")
+    public void testIgnored() {
+        System.out.println("ignored");
+    }
+
+
+    @Test
     @DisplayName("Test 5/0 = null")
-    public void testeDivision_WhenDividingByZero_ShouldReturnNull() {
-        System.out.println("division");
+    public void testDivision_WhenDividingByZero_ShouldReturnNull() {
+        System.out.println("division by zero");
         Double firstNumber = 5.0;
         Double secondNumber = 0.0;
         SimpleMath instance = new SimpleMath();
