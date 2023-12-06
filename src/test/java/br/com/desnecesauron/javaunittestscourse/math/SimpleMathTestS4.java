@@ -3,6 +3,7 @@ package br.com.desnecesauron.javaunittestscourse.math;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -23,7 +24,14 @@ public class SimpleMathTestS4 {
     @DisplayName("Test 5/10 = 0.5")
     @ParameterizedTest
     //@MethodSource("testDivisionInputParameters")
-    @MethodSource()
+    //@MethodSource()
+    @CsvSource({"5, 10, 0.5", "6.2, 2, 3.1", "71, 14, 5.07", "18.3, 3.1, 5.9", "10, 5, 2", "10, 2, 5", "10, 0.5, 20"})
+    // Example of CSV passing strings
+    /*@CsvSource({
+            "Pelé, Football",
+            "Senna, F1",
+            "Falcão, ''",
+    })*/
     public void testDivision(double firstNumber, double secondNumber, double expResult) {
         System.out.println("division");
         Double result = mathInstance.division(firstNumber, secondNumber);
