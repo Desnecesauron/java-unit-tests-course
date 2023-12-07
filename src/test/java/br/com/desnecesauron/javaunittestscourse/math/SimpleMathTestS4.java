@@ -2,10 +2,7 @@ package br.com.desnecesauron.javaunittestscourse.math;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.*;
 
 import java.util.stream.Stream;
 
@@ -20,6 +17,13 @@ public class SimpleMathTestS4 {
     void beforeEachMethod() {
         mathInstance = new SimpleMath();
         System.out.println("Running @BeforeEach method");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"John", "Doe", "Jane", "Doe"})
+    void testValueSource(String firstName) {
+        System.out.println(firstName);
+        assertNotNull(firstName);
     }
 
     @DisplayName("Test double division [firstNumber, secondNumber, expected]")
