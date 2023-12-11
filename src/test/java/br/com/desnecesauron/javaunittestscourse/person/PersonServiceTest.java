@@ -1,7 +1,10 @@
 package br.com.desnecesauron.javaunittestscourse.person;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PersonServiceTest {
 
@@ -10,9 +13,12 @@ public class PersonServiceTest {
     void testCreatePerson_WhenCreateAPersonWithSuccess_ShouldReturnTheObjectOfTheCreatedPerson() {
         // given
         IPersonService personService = new PersonService();
-        // when
 
+        Person person = new Person("Keith", "Moon", "kmoon@gmail.com", "Wembley - UK", "Male");
+        // when
+        Person actual = personService.createPerson(person);
         // then
+        assertNotNull(actual, () -> "The created person is null!");
     }
 
 }
