@@ -9,6 +9,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 // the order is defined by the value of the @Order annotation
 // if the @Order annotation is not present, the test will be executed last
 // this annotation is commonly used in integration tests
+
+@Order(2)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MethodOrderedByOrderTest {
 
