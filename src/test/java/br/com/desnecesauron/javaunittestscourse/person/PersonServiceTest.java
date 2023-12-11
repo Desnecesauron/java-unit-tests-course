@@ -9,7 +9,7 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenCreateAPersonWithSuccess_ShouldReturnTheObjectOfTheCreatedPerson() {
         // given
-
+        IPersonService personService = new PersonService();
         // when
 
         // then
