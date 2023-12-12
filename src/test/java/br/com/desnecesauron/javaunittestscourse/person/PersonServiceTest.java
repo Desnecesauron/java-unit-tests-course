@@ -35,6 +35,7 @@ public class PersonServiceTest {
         // when
         Person actual = personService.createPerson(person);
         // then
+        assertNotNull(person.getId(), () -> "The id is null!");
         assertEquals(person.getFirstName(), actual.getFirstName(), () -> "The first name is not the same!");
         assertEquals(person.getLastName(), actual.getLastName(), () -> "The last name is not the same!");
         assertEquals(person.getEmail(), actual.getEmail(), () -> "The email is not the same!");
