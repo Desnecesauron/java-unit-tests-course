@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonServiceTest {
 
+    IPersonService personService;
     Person person;
 
     @BeforeEach
     void setup() {
+        personService = new PersonService();
         person = new Person("Keith", "Moon", "kmoon@gmail.com", "Wembley - UK", "Male");
     }
 
@@ -19,7 +21,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenCreateAPersonWithSuccess_ShouldReturnTheObjectOfTheCreatedPerson() {
         // given
-        IPersonService personService = new PersonService();
         // when
         Person actual = personService.createPerson(person);
         // then
@@ -30,7 +31,6 @@ public class PersonServiceTest {
     @Test
     void testCreatedPerson_WhenSuccess_ShouldContainsValidFieldsInReturnedPersonObject() {
         // given
-        IPersonService personService = new PersonService();
         // when
         Person actual = personService.createPerson(person);
         // then
@@ -46,12 +46,15 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WithNullEmail_ShouldThrowIllegalArgumentException() {
         // given
-        IPersonService personService = new PersonService();
         person.setEmail(null);
-        // when
-        // then
-        assertThrows(IllegalArgumentException.class, () -> personService.createPerson(person),
-                () -> "The email is null!");
+        // when & then
+
+        // verify thrown message
+        // verify thrown exception
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> personService.createPerson(person),
+                () -> "The email being null should throw IllegalArgumentException!");
+        assertEquals("The Person email is null!", exception.getMessage());
     }
 
 }
