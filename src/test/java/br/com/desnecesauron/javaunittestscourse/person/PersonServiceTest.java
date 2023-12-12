@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonServiceTest {
 
@@ -27,7 +26,7 @@ public class PersonServiceTest {
         assertNotNull(actual, () -> "The created person is null!");
     }
 
-    @DisplayName("When create a person with success should should contain valid fields in returned object")
+    @DisplayName("When create a person with success should contain valid fields in returned object")
     @Test
     void testCreatedPerson_WhenSuccess_ShouldContainsValidFieldsInReturnedPersonObject() {
         // given
@@ -43,5 +42,16 @@ public class PersonServiceTest {
 
     }
 
+    @DisplayName("When create a person with null email should throw IllegalArgumentException")
+    @Test
+    void testCreatePerson_WithNullEmail_ShouldThrowIllegalArgumentException() {
+        // given
+        IPersonService personService = new PersonService();
+        person.setEmail(null);
+        // when
+        // then
+        assertThrows(IllegalArgumentException.class, () -> personService.createPerson(person),
+                () -> "The email is null!");
+    }
 
 }
