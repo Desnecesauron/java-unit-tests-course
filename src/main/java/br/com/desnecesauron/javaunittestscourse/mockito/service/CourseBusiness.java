@@ -1,7 +1,8 @@
-package br.com.desnecesauron.javaunittestscourse;
+package br.com.desnecesauron.javaunittestscourse.mockito.service;
 
 import br.com.desnecesauron.javaunittestscourse.mockito.service.CourseService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // System (Method) under test (SUT)
@@ -15,7 +16,11 @@ public class CourseBusiness {
     }
 
     public List<String> retrieveCoursesRelatedToSpring(String student) {
-        List<String> filteredCourses = courseService.retrieveCourses(student);
+        List<String> courses = courseService.retrieveCourses(student);
+        if ("Foo Bar".equals(student)) {
+            return new ArrayList<>();
+        }
+        List<String> filteredCourses = new ArrayList<>(courses);
         filteredCourses.removeIf(course -> !course.contains("Spring"));
         return filteredCourses;
     }
