@@ -62,4 +62,17 @@ public class ListTest {
         assertEquals("Cesar", listMock.get(anyInt()));
     }
 
+    @Test
+    void testMockingList_When_ThrowsAnException() {
+        // Given / Arrange
+        List listMock = mock(List.class);
+
+        // is possible to chain the when() method to return different values in different calls!
+        when(listMock.get(anyInt())).thenThrow(new RuntimeException("Foo Bar"));
+
+        // When / Act && Then / Assert
+        assertThrows(RuntimeException.class, () -> listMock.get(anyInt()),
+                () -> "Should have thrown an RuntimeException");
+    }
+
 }
