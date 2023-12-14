@@ -3,6 +3,7 @@ package br.com.desnecesauron.javaunittestscourse.mockito.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +64,6 @@ public class CourseBusinessMockWithBDDTest {
         verify(mockService, atMost(1)).deleteCourse("Kubernetes");
     }
 
-
     @DisplayName("Delete courses not related to spring using mockito should call method deleteCourse() V2")
     @Test
     void testDeleteCoursesNotRelatedToSpring_When_UsingMockitoVerify_Should_CallMethod_deleteCourseV2() {
@@ -80,6 +80,33 @@ public class CourseBusinessMockWithBDDTest {
         then(mockService).should(atLeast(1)).deleteCourse("Kubernetes");
         then(mockService).should(atLeastOnce()).deleteCourse("Kubernetes");
         then(mockService).should(atMost(1)).deleteCourse("Kubernetes");
+    }
+
+    @DisplayName("Delete courses not related capturing arguments should call method deleteCourse()")
+    @Test
+    void testDeleteCoursesNotRelatedToSpring_CapturingArguments_Should_CallMethod_deleteCourseV2() {
+        // Given / Arrange
+//        listCourses = Arrays.asList("Spring", "Microservices");
+        listCourses = Arrays.asList("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                "Kubernetes");
+        given(mockService.retrieveCourses("Cesar")).willReturn(listCourses);
+
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        // When / Act
+        business.deleteCoursesNotRelatedToSpring("Cesar");
+
+        // Then / Assert
+
+        // capture the argument passed to the method deleteCourse()
+//        then(mockService).should().deleteCourse(argumentCaptor.capture());
+        // capture the argument passed to the method deleteCourse() 7 times
+        then(mockService).should(times(7)).deleteCourse(argumentCaptor.capture());
+        // verify if the argument captured is equals to "Microservices"
+//        assertThat(argumentCaptor.getValue(), is("Microservices"));
+
+        // getAllValues() method is used to capture all arguments passed to the method deleteCourse()
+        assertThat(argumentCaptor.getAllValues().size(), is(7));
     }
 
 
