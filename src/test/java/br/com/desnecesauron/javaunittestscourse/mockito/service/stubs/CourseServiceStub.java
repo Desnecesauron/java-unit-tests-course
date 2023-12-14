@@ -18,5 +18,9 @@ public class CourseServiceStub implements CourseService {
         return null;
     }
 
+    @Override
+    public void deleteCourse(String course) {
 
+    }
+    
 }
