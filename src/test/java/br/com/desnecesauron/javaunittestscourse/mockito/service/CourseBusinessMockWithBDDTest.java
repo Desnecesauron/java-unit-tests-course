@@ -10,6 +10,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 public class CourseBusinessMockWithBDDTest {
@@ -60,6 +61,25 @@ public class CourseBusinessMockWithBDDTest {
         // verify if the method deleteCourse() was called with the argument "Azure"
         // the atMost() method is used to verify if the method was called at most one time
         verify(mockService, atMost(1)).deleteCourse("Kubernetes");
+    }
+
+
+    @DisplayName("Delete courses not related to spring using mockito should call method deleteCourse() V2")
+    @Test
+    void testDeleteCoursesNotRelatedToSpring_When_UsingMockitoVerify_Should_CallMethod_deleteCourseV2() {
+        // Given / Arrange
+        given(mockService.retrieveCourses("Cesar")).willReturn(listCourses);
+        // When / Act
+        business.deleteCoursesNotRelatedToSpring("Cesar");
+        // Then / Assert
+
+        then(mockService).should().deleteCourse("Microservices");
+        // never() method is used to verify if the method was never called
+        then(mockService).should(never()).deleteCourse("Spring");
+        then(mockService).should(times(1)).deleteCourse("API");
+        then(mockService).should(atLeast(1)).deleteCourse("Kubernetes");
+        then(mockService).should(atLeastOnce()).deleteCourse("Kubernetes");
+        then(mockService).should(atMost(1)).deleteCourse("Kubernetes");
     }
 
 
