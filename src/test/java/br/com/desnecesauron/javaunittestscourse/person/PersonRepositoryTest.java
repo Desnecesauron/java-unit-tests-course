@@ -60,4 +60,19 @@ class PersonRepositoryTest {
 
     }
 
+    @DisplayName("Given person list when find by email then return person object")
+    @Test
+    void testGivenPersonObject_WhenFindByEmail_ThenReturnPersonObject() {
+
+        Person person = new Person("John", "Doe", "email@email.com", "Uberlandia - MG", "M");
+
+        personRepository.save(person);
+
+        Person personFound = personRepository.findByEmail(person.getEmail()).orElse(null);
+
+        assertNotNull(personFound);
+        assertEquals(person.getId(), personFound.getId());
+
+    }
+
 }
