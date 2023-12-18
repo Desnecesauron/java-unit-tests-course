@@ -45,4 +45,19 @@ class PersonRepositoryTest {
 
     }
 
+    @DisplayName("Given person list when find by id then return person object")
+    @Test
+    void testGivenPersonObject_WhenFindById_ThenReturnPersonObject() {
+
+        Person person = new Person("John", "Doe", "email@email.com", "Uberlandia - MG", "M");
+
+        personRepository.save(person);
+
+        Person personFound = personRepository.findById(person.getId()).orElse(null);
+
+        assertNotNull(personFound);
+        assertEquals(person.getId(), personFound.getId());
+
+    }
+
 }
