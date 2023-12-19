@@ -113,4 +113,22 @@ class PersonRepositoryTest {
 
     }
 
+
+    @DisplayName("Given person object when find by JPQL then return person object")
+    @Test
+    void testGivenFirstNameAndLastName_WhenFindByJPQL_ThenReturnPersonObject() {
+
+        Person person = new Person("John", "Doe", "email@email.com", "Uberlandia - MG", "M");
+
+        personRepository.save(person);
+
+        Person personFound = personRepository.findByJPQL(person.getFirstName(), person.getLastName());
+
+        assertNotNull(personFound);
+        assertEquals(person.getId(), personFound.getId());
+        assertEquals(person.getFirstName(), personFound.getFirstName());
+        assertEquals(person.getLastName(), personFound.getLastName());
+
+    }
+
 }
