@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,6 +58,19 @@ public class PersonServicesTest {
         assertThrows(ResourceNotFoundException.class, () -> personServices.create(person));
 
         verify(personRepository, never()).save(any(Person.class));
+
+    }
+
+    @DisplayName("Test Given Persons List When Find All Persons Then Return Persons List")
+    @Test
+    void testGivenPersonsList_WhenFindAllPersons_ThenReturnPersonsList() {
+        Person person1 = new Person("Johnzinho", "Doezão", "email1@email1.com", "Lavras - MG", "M");
+        given(personRepository.findAll()).willReturn(List.of(person, person1));
+
+        List<Person> persons = personServices.findAll();
+
+        assertNotNull(persons);
+        assertEquals(2, persons.size());
 
     }
 
