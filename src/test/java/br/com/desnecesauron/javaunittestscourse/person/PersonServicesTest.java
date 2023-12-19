@@ -1,5 +1,6 @@
 package br.com.desnecesauron.javaunittestscourse.person;
 
+import br.com.desnecesauron.javaunittestscourse.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonServicesTest {
@@ -41,6 +45,18 @@ public class PersonServicesTest {
 
         assertNotNull(savedPerson);
         assertEquals(person.getFirstName(), savedPerson.getFirstName());
+
+    }
+
+    @DisplayName("Test Given Existing Email When Save Person Then Throws Exception")
+    @Test
+    void testGivenExistingEmail_WhenSavePerson_ThenThrowsException() {
+
+        given(personRepository.findByEmail(anyString())).willReturn(Optional.of(person));
+
+        assertThrows(ResourceNotFoundException.class, () -> personServices.create(person));
+
+        verify(personRepository, never()).save(any(Person.class));
 
     }
 
