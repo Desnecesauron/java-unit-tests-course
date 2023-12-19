@@ -148,4 +148,21 @@ class PersonRepositoryTest {
 
     }
 
+    @DisplayName("Given person object when find by Native SQL then return person object")
+    @Test
+    void testGivenFirstNameAndLastName_WhenFindByNativeSQL_ThenReturnPersonObject() {
+
+        Person person = new Person("John", "Doe", "email@email.com", "Uberlandia - MG", "M");
+
+        personRepository.save(person);
+
+        Person personFound = personRepository.findByNativeSQL(person.getFirstName(), person.getLastName());
+
+        assertNotNull(personFound);
+        assertEquals(person.getId(), personFound.getId());
+        assertEquals(person.getFirstName(), personFound.getFirstName());
+        assertEquals(person.getLastName(), personFound.getLastName());
+
+    }
+
 }
