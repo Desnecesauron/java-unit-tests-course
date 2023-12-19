@@ -131,7 +131,7 @@ class PersonRepositoryTest {
 
     }
 
-    @DisplayName("Given person object when find by JPQL NAMED then return person object")
+    @DisplayName("Given person object when find by JPQL NAMED Parameters then return person object")
     @Test
     void testGivenFirstNameAndLastName_WhenFindByJPQLNamedParameters_ThenReturnPersonObject() {
 
@@ -157,6 +157,24 @@ class PersonRepositoryTest {
         personRepository.save(person);
 
         Person personFound = personRepository.findByNativeSQL(person.getFirstName(), person.getLastName());
+
+        assertNotNull(personFound);
+        assertEquals(person.getId(), personFound.getId());
+        assertEquals(person.getFirstName(), personFound.getFirstName());
+        assertEquals(person.getLastName(), personFound.getLastName());
+
+    }
+
+    @DisplayName("Given person object when find by Native SQL NAMED Parameters then return person object")
+    @Test
+    void testGivenFirstNameAndLastName_WhenFindByNativeSQLWithNamedParameters_ThenReturnPersonObject() {
+
+        Person person = new Person("John", "Doe", "email@email.com", "Uberlandia - MG", "M");
+
+        personRepository.save(person);
+
+        Person personFound = personRepository.findByNativeSQLWithNamedParameters(person.getFirstName(),
+                person.getLastName());
 
         assertNotNull(personFound);
         assertEquals(person.getId(), personFound.getId());
