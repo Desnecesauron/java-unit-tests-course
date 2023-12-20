@@ -86,7 +86,6 @@ public class PersonServicesTest {
 
     }
 
-
     @DisplayName("Test Given Person Id When FindById Then Return Person Object")
     @Test
     void testGivenPersonId_WhenFindById_ThenReturnPersonObject() {
@@ -98,6 +97,25 @@ public class PersonServicesTest {
         assertNotNull(savedPerson);
         assertEquals(person.getFirstName(), savedPerson.getFirstName());
 
+    }
+
+    @DisplayName("Test Given Person Object When update Person Then Return updated Person Object")
+    @Test
+    void testGivenPersonObject_WhenUpdatePerson_ThenReturnUpdatedPersonObject() {
+
+        person.setId(1L);
+        given(personRepository.findById(anyLong())).willReturn(Optional.of(person));
+
+        person.setFirstName("Jonas");
+        person.setEmail("jonas@jonas.com");
+
+        given(personRepository.save(person)).willReturn(person);
+
+        Person updatedPerson = personServices.update(person);
+
+        assertNotNull(updatedPerson);
+        assertEquals(person.getFirstName(), updatedPerson.getFirstName());
+        assertEquals(person.getEmail(), updatedPerson.getEmail());
     }
 
 }
