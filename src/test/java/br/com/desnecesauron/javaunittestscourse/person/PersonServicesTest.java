@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -84,6 +83,20 @@ public class PersonServicesTest {
 
         assertTrue(persons.isEmpty());
         assertEquals(0, persons.size());
+
+    }
+
+
+    @DisplayName("Test Given Person Id When FindById Then Return Person Object")
+    @Test
+    void testGivenPersonId_WhenFindById_ThenReturnPersonObject() {
+
+        given(personRepository.findById(anyLong())).willReturn(Optional.of(person));
+
+        Person savedPerson = personServices.findById(1L);
+
+        assertNotNull(savedPerson);
+        assertEquals(person.getFirstName(), savedPerson.getFirstName());
 
     }
 
