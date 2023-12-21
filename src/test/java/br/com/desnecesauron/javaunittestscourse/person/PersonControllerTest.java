@@ -74,4 +74,18 @@ public class PersonControllerTest {
 
     }
 
+    @DisplayName("Test Given Person Id When Find By Id Then Return Person Object")
+    @Test
+    void testGivenPersonId_WhenFindById_ThenReturnPersonObject() throws Exception {
+
+        long personId = 1L;
+        given(personServices.findById(personId)).willReturn(person);
+
+        ResultActions resultActions = mockMvc.perform(get("/person/{id}", personId));
+
+        resultActions.andDo(print()).andExpect(status().isOk())
+                     .andExpect(jsonPath("$.firstName").value(person.getFirstName()))
+                     .andExpect(jsonPath("$.lastName").value(person.getLastName()))
+                     .andExpect(jsonPath("$.email").value(person.getEmail()));
+    }
 }
