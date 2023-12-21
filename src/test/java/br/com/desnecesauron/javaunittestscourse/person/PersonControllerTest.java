@@ -11,9 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,6 +55,22 @@ public class PersonControllerTest {
                      .andExpect(jsonPath("$.firstName").value(person.getFirstName()))
                      .andExpect(jsonPath("$.lastName").value(person.getLastName()))
                      .andExpect(jsonPath("$.email").value(person.getEmail()));
+
+    }
+
+    @DisplayName("Test Given List Of Persons When Find All Persons Then Return Persons List")
+    @Test
+    void testGivenListOfPersons_WhenFindAllPersons_ThenReturnPersonsList() throws Exception {
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(person);
+        persons.add(new Person("Leopardo", "Costa", "leopardo@costa.com.br", "Cidade dos Uber (Uberlândia)", "M"));
+
+        given(personServices.findAll()).willReturn(persons);
+
+        ResultActions resultActions = mockMvc.perform(get("/person").content(objectMapper.writeValueAsString(person)));
+
+        resultActions.andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$.size()").value(persons.size()));
 
     }
 
