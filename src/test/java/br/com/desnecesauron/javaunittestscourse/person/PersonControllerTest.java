@@ -1,5 +1,6 @@
 package br.com.desnecesauron.javaunittestscourse.person;
 
+import br.com.desnecesauron.javaunittestscourse.exceptions.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -87,5 +88,17 @@ public class PersonControllerTest {
                      .andExpect(jsonPath("$.firstName").value(person.getFirstName()))
                      .andExpect(jsonPath("$.lastName").value(person.getLastName()))
                      .andExpect(jsonPath("$.email").value(person.getEmail()));
+    }
+
+    @DisplayName("Test Given Invalid Person Id When Find By Id Then Return Not Found")
+    @Test
+    void testGivenInvalidPersonId_WhenFindById_ThenReturnNotFound() throws Exception {
+
+        long personId = 1L;
+        given(personServices.findById(personId)).willThrow(ResourceNotFoundException.class);
+
+        ResultActions resultActions = mockMvc.perform(get("/person/{id}", personId));
+
+        resultActions.andDo(print()).andExpect(status().isNotFound());
     }
 }
