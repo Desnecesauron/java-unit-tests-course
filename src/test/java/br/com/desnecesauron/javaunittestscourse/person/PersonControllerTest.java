@@ -18,8 +18,7 @@ import java.util.List;
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -100,5 +99,27 @@ public class PersonControllerTest {
         ResultActions resultActions = mockMvc.perform(get("/person/{id}", personId));
 
         resultActions.andDo(print()).andExpect(status().isNotFound());
+    }
+
+    @DisplayName("Test Given Updated Person Object When Update Person Then Return Updated Person Object")
+    @Test
+    void testGivenUpdatedPersonObject_WhenUpdatePerson_ThenReturnUpdatedPersonObject() throws Exception {
+
+        long personId = 1L;
+        given(personServices.findById(personId)).willReturn(person);
+        given(personServices.update(any(Person.class))).willAnswer((invocation) -> invocation.getArgument(0));
+
+        Person updatedPerson = new Person("Leopardo", "Costa", "leopardo@costa.com.br", "Cidade dos Uber (Uberlândia)",
+                "M");
+
+
+        ResultActions resultActions = mockMvc.perform(put("/person").contentType(MediaType.APPLICATION_JSON).content(
+                objectMapper.writeValueAsString(updatedPerson)));
+
+        resultActions.andDo(print()).andExpect(status().isOk())
+                     .andExpect(jsonPath("$.firstName").value(updatedPerson.getFirstName()))
+                     .andExpect(jsonPath("$.lastName").value(updatedPerson.getLastName()))
+                     .andExpect(jsonPath("$.email").value(updatedPerson.getEmail()));
+
     }
 }
