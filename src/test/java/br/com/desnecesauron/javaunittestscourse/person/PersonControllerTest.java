@@ -18,6 +18,7 @@ import java.util.List;
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -139,6 +140,19 @@ public class PersonControllerTest {
                 objectMapper.writeValueAsString(updatedPerson)));
 
         resultActions.andDo(print()).andExpect(status().isNotFound());
+
+    }
+
+    @DisplayName("Test Given Person Id When Delete Then Return No Content")
+    @Test
+    void testGivenPersonId_WhenDelete_ThenReturnNoContent() throws Exception {
+
+        long personId = 1L;
+        willDoNothing().given(personServices).delete(personId);
+
+        ResultActions resultActions = mockMvc.perform(delete("/person/{id}", personId));
+
+        resultActions.andDo(print()).andExpect(status().isNoContent());
 
     }
 }
