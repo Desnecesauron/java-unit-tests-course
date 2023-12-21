@@ -1,21 +1,19 @@
 package br.com.desnecesauron.javaunittestscourse.person;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
-
 import br.com.desnecesauron.javaunittestscourse.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 @Service
 public class PersonServices {
 
-    private Logger logger = Logger.getLogger(PersonServices.class.getName());
-
     @Autowired
     PersonRepository repository;
-
+    private Logger logger = Logger.getLogger(PersonServices.class.getName());
 
     public List<Person> findAll() {
 

@@ -122,4 +122,23 @@ public class PersonControllerTest {
                      .andExpect(jsonPath("$.email").value(updatedPerson.getEmail()));
 
     }
+
+    @DisplayName("Test Given Nonexistent Person When Update Then Return Not Found")
+    @Test
+    void testGivenNonexistentPerson_WhenUpdate_ThenReturnNotFound() throws Exception {
+
+        long personId = 1L;
+        given(personServices.findById(personId)).willThrow(ResourceNotFoundException.class);
+        given(personServices.update(any(Person.class))).willAnswer((invocation) -> invocation.getArgument(1));
+
+        Person updatedPerson = new Person("Leopardo", "Costa", "leopardo@costa.com.br", "Cidade dos Uber (Uberlândia)",
+                "M");
+
+
+        ResultActions resultActions = mockMvc.perform(put("/person").contentType(MediaType.APPLICATION_JSON).content(
+                objectMapper.writeValueAsString(updatedPerson)));
+
+        resultActions.andDo(print()).andExpect(status().isNotFound());
+
+    }
 }
