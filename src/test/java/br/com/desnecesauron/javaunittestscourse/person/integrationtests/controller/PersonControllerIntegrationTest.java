@@ -65,4 +65,37 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
         person = savedPerson;
     }
 
+    @Order(2)
+    @DisplayName("Integration test given person object when update one person then return a person object")
+    @Test
+    void integrationTestGivenPersonObject_When_UpdateOnePerson_ShouldReturnAPersonObject() throws JsonProcessingException {
+
+        person.setFirstName("Johnzinho");
+        person.setLastName("Doezão");
+        person.setEmail("john@gmail.com");
+
+
+        String strSavedPerson = given().spec(requestSpecification).contentType(TestConfigs.CONTENT_TYPE_JSON)
+                                       .body(person).when().put().then().statusCode(200).extract().body().asString();
+
+        Person savedPerson = objectMapper.readValue(strSavedPerson, Person.class);
+
+        assertNotNull(savedPerson);
+        assertNotNull(savedPerson.getId());
+        assertNotNull(savedPerson.getFirstName());
+        assertNotNull(savedPerson.getLastName());
+        assertNotNull(savedPerson.getEmail());
+        assertNotNull(savedPerson.getAddress());
+        assertNotNull(savedPerson.getGender());
+
+        assertTrue(savedPerson.getId() > 0L);
+        assertEquals(person.getFirstName(), savedPerson.getFirstName());
+        assertEquals(person.getLastName(), savedPerson.getLastName());
+        assertEquals(person.getEmail(), savedPerson.getEmail());
+        assertEquals(person.getAddress(), savedPerson.getAddress());
+        assertEquals(person.getGender(), savedPerson.getGender());
+
+        person = savedPerson;
+    }
+
 }
