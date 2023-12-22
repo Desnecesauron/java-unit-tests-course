@@ -134,9 +134,8 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
 
         Person person1 = new Person("Joanes", "Burgo", "email1@email1.com", "Lavras - MG", "M");
 
-        String strSecondSavedPerson = given().spec(requestSpecification).contentType(TestConfigs.CONTENT_TYPE_JSON)
-                                             .body(person1).when().post().then().statusCode(200).extract().body()
-                                             .asString();
+        given().spec(requestSpecification).contentType(TestConfigs.CONTENT_TYPE_JSON).body(person1).when().post().then()
+               .statusCode(200).extract().body().asString();
 
         String strFindAll = given().spec(requestSpecification).when().get().then().statusCode(200).extract().body()
                                    .asString();
@@ -182,7 +181,7 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
     @Order(5)
     @DisplayName("Integration test given person object when delete one person then return no content")
     @Test
-    void integrationTestGivenPersonObject_When_Delete_ShouldReturnNoContent() throws JsonProcessingException {
+    void integrationTestGivenPersonObject_When_Delete_ShouldReturnNoContent() {
 
         given().spec(requestSpecification).pathParam("id", person.getId()).when().delete("{id}").then().statusCode(204);
 
